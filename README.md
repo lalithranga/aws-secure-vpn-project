@@ -213,4 +213,4 @@ Through this project I gained hands-on experience with:
 
 Detailed implementation steps and screenshots are available in:
 
-**SCS-C02 AWS Certified Security Assessment Report.pdf**
+**aws-secure-vpn-project.pdf**

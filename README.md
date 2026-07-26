@@ -1,216 +1,40 @@
-# 🔐 SecureBank Multi-Region AWS VPC Architecture
+# SecureBank Multi-Region AWS Network Isolation Framework
 
-A secure multi-region AWS network architecture project designed for a simulated financial institution (**SecureBank**).
+An enterprise-grade, multi-region network infrastructure blueprint designed for a simulated financial services institution (**SecureBank**). This architecture implements strict Virtual Private Cloud (VPC) network isolation, multi-tier segmentation, and secure inter-region cryptographic routing via an encrypted IPsec Site-to-Site VPN tunnel mapping regional operational nodes.
 
-This project demonstrates enterprise cloud security practices including VPC isolation, network segmentation, encrypted Site-to-Site VPN connectivity, Linux administration, and AWS security controls.
-
----
-
-## 🚀 Skills Demonstrated
-
-- AWS Cloud Infrastructure
-- Secure VPC Architecture
-- Multi-Region Networking
-- Linux Server Administration
-- IPsec VPN Configuration
-- Network Security
-- Security Groups
-- Route Tables
-- CIDR Planning
-- Cloud Security Best Practices
+## 📄 Executive Technical Documentation
+👉 [**Click here to read the full Systems Security Engineering PDF**](documents/aws-secure-vpn-project.pdf)
 
 ---
 
-## 🛠️ Technologies Used
+## 🏗️ Architectural Topology Diagram
 
-- AWS VPC
-- Amazon EC2
-- Security Groups
-- Internet Gateway
-- Elastic IP
-- Virtual Private Gateway (VGW)
-- Customer Gateway (CGW)
-- AWS Site-to-Site VPN
-- Linux
-- Libreswan IPsec
-- AES-256 Encryption
-- IKEv2
+![AWS Multi-Region Infrastructure Security Topology](architecture-diagram.jpg)
+
+*Figure 1: Cross-regional schematic demonstrating zero-trust network topology spanning Sydney and Singapore AWS data boundaries, interconnected through a hardware-virtualized IPsec tunnel configuration.*
 
 ---
 
-# 🏗️ Architecture Overview
+## ⚙️ Technical Breakdown & Tier Security
 
-The solution contains two isolated AWS environments:
+### 1. Cross-Regional Network Topologies
+The infrastructure maintains distinct regional isolation protocols to minimize organizational blast radiuses:
+*   **🇦🇺 Primary Node (Sydney Data Boundary):** Houses the `SecureBank-Sydney-VPC` (CIDR `10.0.0.0/16`) hosting localized administrative infrastructure and a target **Virtual Private Gateway (VGW)** acting as the secure multi-region landing anchor.
+*   **🇸🇬 Distributed Node (Singapore Data Boundary):** Houses the `SecureBank-Singapore-VPC` (CIDR `172.16.0.0/16`) acting as a secure operations tier, utilizing a software-defined **Customer Gateway (CGW)** bound to a static Elastic IP address.
 
-## 🇦🇺 Sydney Region (Head Office)
+### 2. Cryptographic Routing & Inter-VPC Tunneling
+*   **Hardware VPN Tunneling:** Implements an enterprise AWS Site-to-Site VPN framework passing secure transit metrics over public web paths via advanced encryption parameters: **IKEv2**, **AES-256 bit encryption blocks**, and **SHA-256 hashing integrity verification**.
+*   **Linux Security Engineering:** Deployed and hardened native Linux workloads utilizing the Open Source **Libreswan IPsec** stack. Configured low-level configuration matrices (`ipsec.conf` and `aws-vpn.secrets`) to achieve robust, high-performance private IP routing across the multi-region transport tier.
 
-**VPC:** SecureBank-Sydney-VPC
-
-```
-CIDR: 10.0.0.0/16
-Subnet: 10.0.1.0/24
-```
-
-Components:
-
-- Linux EC2 Server
-- Security Group Firewall
-- Virtual Private Gateway
-- Route Tables
-
+### 3. Stateful Perimeter Firewalls & Least-Privilege Guardrails
+*   **Default-Deny Access Matrices:** Fine-tuned AWS Security Groups utilizing restrictive, stateful ingress policy boundaries. Administrative shell access (SSH) and network echo requests (ICMP) are pinned exclusively to trusted origin ranges, eliminating public network vectors.
+*   **Deterministic Routing Tables:** Custom Route Tables steer data paths explicitly. Internal subnet packets targeted for corresponding cross-region workloads are dynamically forced down the cryptographic Virtual Private Gateway tunnel boundary.
 
 ---
 
-## 🇸🇬 Singapore Region (Branch Office)
-
-**VPC:** SecureBank-Singapore-VPC
-
-```
-CIDR: 172.16.0.0/16
-Subnet: 172.16.1.0/24
-```
-
-Components:
-
-- Linux EC2 Server
-- Elastic IP
-- Customer Gateway
-- Libreswan VPN Configuration
-
-
----
-
-# 🔒 Security Implementation
-
-## Network Segmentation
-
-Two separate VPC environments were created to isolate business locations.
-
-Benefits:
-
-- Reduces attack impact
-- Prevents unnecessary network access
-- Limits lateral movement during security incidents
-
-
-## Least Privilege Access
-
-Security Groups were configured using a default deny approach.
-
-Controls include:
-
-- Restricted SSH access
-- Limited ICMP traffic
-- Controlled administrative access
-- No unrestricted internet exposure
-
-
-## Encrypted VPN Communication
-
-A secure Site-to-Site VPN tunnel was implemented using:
-
-- IPsec
-- IKEv2
-- AES-256 encryption
-- SHA-256 integrity verification
-
-
-This protects communication between Sydney and Singapore over the public internet.
-
-
----
-
-# 🌐 VPN Architecture
-
-Traffic flow:
-
-```
-Sydney EC2
-    |
-Route Table
-    |
-Virtual Private Gateway
-    |
-Encrypted IPsec VPN Tunnel
-    |
-Customer Gateway
-    |
-Singapore EC2
-```
-
----
-
-# 🐧 Linux Administration
-
-Configured VPN services on Linux using:
-
-- Libreswan IPsec
-- ipsec.conf
-- aws-vpn.secrets
-- VPN status monitoring commands
-
-
-Verified:
-
-- VPN tunnel status
-- Encryption parameters
-- Private IP communication
-- Secure SSH connectivity
-
-
----
-
-# 📊 Security Concepts Applied
-
-This project follows:
-
-- AWS Well-Architected Security Pillar
-- NIST Cybersecurity Framework principles
-- Zero Trust networking concepts
-- Defense-in-depth security model
-- Principle of Least Privilege
-
-
----
-
-# 📂 Repository Contents
-
-```
-SecureBank-Multi-Region-VPC/
-
-├── README.md
-├── architecture-diagram.png
-├── SCS-C02-Assessment-Report.pdf
-```
-
----
-
-# 📚 Learning Outcomes
-
-Through this project I gained hands-on experience with:
-
-- Designing secure AWS networks
-- Deploying multi-region cloud infrastructure
-- Configuring VPN connectivity
-- Managing Linux cloud servers
-- Applying cloud security principles
-- Troubleshooting network connectivity issues
-
-
----
-
-# 🚀 Future Improvements
-
-- Automate infrastructure using Terraform
-- Add AWS CloudWatch monitoring
-- Implement AWS Secrets Manager
-- Add AWS IAM least privilege policies
-- Create CI/CD deployment pipeline
-
----
-
-## 📄 Documentation
-
-Detailed implementation steps and screenshots are available in:
-
-**aws-secure-vpn-project.pdf**
+## 🛠️ Technology Stack & Security Blueprints Verified
+*   **Cloud Networks:** AWS VPC (Multi-Region Topology), Public/Private Subnetting, Advanced CIDR Optimization
+*   **Cryptographic Mesh:** AWS Virtual Private Gateways (VGW), Customer Gateways (CGW), Site-to-Site IPsec VPN
+*   **Compute Hardening:** Linux Cloud Environments, Libreswan IPsec Systems, Kernel Network Primitives
+*   **Encryption Parameters:** AES-256 standard, IKEv2 Protocols, SHA-256 Data Verification Streams
+*   **Security Frameworks Applied:** NIST Cyber Security Framework, AWS Security Pillar, Zero-Trust Architecture, Defense-in-Depth Control Mechanisms
